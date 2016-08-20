@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     public Boundary boundary;
     public float speed = 10.0f;
     public Vector3 tilt;
+    public Vector3 externalVelocity = Vector3.zero;
 
     private Rigidbody rb;
 
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour {
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, -1.0f);
-        rb.velocity = speed * movement;
+        rb.velocity = speed * movement + externalVelocity;
 
         rb.position = new Vector3
         (
