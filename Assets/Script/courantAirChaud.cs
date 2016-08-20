@@ -6,10 +6,9 @@ public enum WindAxis { x, y, z }
 public class courantAirChaud : MonoBehaviour {
 
     public GameObject avion;
-    public Vector3 velocityVector;
     public float magnitude = 1.0f;
-    public bool useVelocityVector = false;
     public WindAxis windAxis;
+    public GameObject windOrigin;
 
     private PlayerController playerController;
     private Vector3 objectAxis;
@@ -17,24 +16,14 @@ public class courantAirChaud : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Debug.Log("bob");
         playerController = avion.GetComponent<PlayerController>();
 
-        if (useVelocityVector)
-        {
-            actualVelocityVector = velocityVector;
-        }
+        if (windAxis == WindAxis.x)
+            objectAxis = gameObject.transform.right;
+        else if (windAxis == WindAxis.y)
+            objectAxis = gameObject.transform.up;
         else
-        {
-            if (windAxis == WindAxis.x)
-                objectAxis = gameObject.transform.right;
-            else if (windAxis == WindAxis.y)
-                objectAxis = gameObject.transform.up;
-            else
-                objectAxis = gameObject.transform.forward;
-
-            actualVelocityVector = magnitude * objectAxis;
-        }
+            objectAxis = gameObject.transform.forward;
     }
 	
 	// Update is called once per frame
@@ -44,13 +33,13 @@ public class courantAirChaud : MonoBehaviour {
 
     void OnTriggerEnter ()
     {
-        Debug.Log("enter");
+        Vector3 originToPlane = playerController.transform.position - windOrigin.transform.position;
+        actualVelocityVector = (40.0f + magnitude * 20.0f) / Vector3.Project(originToPlane, objectAxis).magnitude * objectAxis;
         playerController.externalVelocity += actualVelocityVector;
     }
 
     void OnTriggerExit()
     {
-        Debug.Log("leave");
         playerController.externalVelocity -= actualVelocityVector;
     }
 }
