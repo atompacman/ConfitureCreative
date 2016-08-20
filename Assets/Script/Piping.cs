@@ -5,12 +5,14 @@ public class Piping : MonoBehaviour
     public GameObject MainPipeSection;
     public GameObject SecondaryPipeSection;
     public GameObject Sprinkler;
+    public GameObject Puddle;
 
     public float MainPipeLength;
     public float MainPipeSectionSize;
     public uint MinDistBetweenSecondaryPipes;
     public float SecondaryPipeProbability;
     public float SecondaryPipeSize;
+    public float PuddleHeight;
 
 	private void Start()
     {
@@ -21,12 +23,21 @@ public class Piping : MonoBehaviour
 
             if (i % MinDistBetweenSecondaryPipes == 0 && Random.value < SecondaryPipeProbability)
             {
+                // Create secondary pipe
                 var obj = CreatePipeObject(SecondaryPipeSection, currPosZ);
                 obj.transform.localScale = new Vector3(1, 1, SecondaryPipeSize);
                 
+                // Create spinkler
                 obj = CreatePipeObject(Sprinkler, currPosZ);
                 var pos = obj.transform.position;
                 pos.x = Random.value * SecondaryPipeSize - SecondaryPipeSize / 2;
+                obj.transform.position = pos;
+
+                // Create puddle
+                obj = CreatePipeObject(Puddle, currPosZ);
+                obj.transform.Rotate(Vector3.up, 360 * Random.value);
+                pos = obj.transform.position;
+                pos.y = PuddleHeight;
                 obj.transform.position = pos;
             }
         }

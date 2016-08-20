@@ -113,5 +113,9 @@ public class PlayerController : MonoBehaviour
         {
             wetLvl -= 0.01f;
         }
+        if (collider.gameObject.name.Contains("Puddle"))
+        {
+            wetLvl += 0.04f;
+        }
     }
 }
