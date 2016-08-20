@@ -88,6 +88,11 @@ public class PlayerController : MonoBehaviour
         smoothedExternalVelocity += (externalVelocity - smoothedExternalVelocity) * 2.0f * Time.deltaTime;
         rb.velocity = globalSpeed * movement + smoothedExternalVelocity;
 
+        if (rb.position.y < 0.5f)
+        {
+            gameState.GameOver();
+        }
+
         rb.position = new Vector3
         (
             Mathf.Clamp(rb.position.x, positionBoundary.xMin, positionBoundary.xMax),
@@ -125,10 +130,6 @@ public class PlayerController : MonoBehaviour
             {
                 wetLvl = 1.0f;
             }
-        }
-        else if(collider.gameObject.layer == WALLS_LAYER)
-        {
-            gameState.GameOver();
         }
     }
 
