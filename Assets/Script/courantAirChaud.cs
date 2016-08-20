@@ -5,7 +5,7 @@ public enum WindAxis { x, y, z }
 
 public class courantAirChaud : MonoBehaviour {
 
-    public GameObject avion;
+    
     public float magnitude = 1.0f;
     public WindAxis windAxis;
     public GameObject windOrigin;
@@ -13,10 +13,12 @@ public class courantAirChaud : MonoBehaviour {
     private PlayerController playerController;
     private Vector3 objectAxis;
     private Vector3 actualVelocityVector;
+    private GameObject plane;
 
 	// Use this for initialization
 	void Start () {
-        playerController = avion.GetComponent<PlayerController>();
+        plane = GameObject.Find("PaperPlane");
+        playerController = plane.GetComponent<PlayerController>();
 
         if (windAxis == WindAxis.x)
             objectAxis = gameObject.transform.right;
@@ -33,7 +35,7 @@ public class courantAirChaud : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.name != "PaperPlane")
+        if (collider.gameObject != plane)
         {
             return;
         }
@@ -45,7 +47,7 @@ public class courantAirChaud : MonoBehaviour {
 
     void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.name != "PaperPlane")
+        if (collider.gameObject != plane)
         {
             return;
         }
