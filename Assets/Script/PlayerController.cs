@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
 
     public Boundary positionBoundary;
     public float globalSpeed = 10.0f;
-    public float gravitySpeed = -0.5f;
+    public float gravitySpeed = -0.3f;
     public float inputVerticalSpeed = 0.0f;
     public float defaultPlaneSpeed = 1.0f;
     public float planeSpeedMin = 0.5f;
@@ -19,8 +19,10 @@ public class PlayerController : MonoBehaviour {
     public Vector3 movementTilt = new Vector3(2.0f, 1.0f, 2.0f);
     public Vector3 externalVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
+
     private Rigidbody rb;
     private float planeSpeed;
+    public Vector3 smoothedExternalVelocity = Vector3.zero;
 
     // Use this for initialization
     void Start () {
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         if (moveVertical > 0)
         {
             moveVertical = 0.0f;
-            planeSpeed -= inputVerticalSpeed;
+         //   planeSpeed -= inputVerticalSpeed;
         }
 
         // DOWN
@@ -55,7 +57,9 @@ public class PlayerController : MonoBehaviour {
         planeSpeed = Mathf.Clamp(planeSpeed, planeSpeedMin, planeSpeedMax);
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical + gravitySpeed, -planeSpeed);
-        rb.velocity = globalSpeed * movement + externalVelocity;
+
+        smoothedExternalVelocity += (externalVelocity - smoothedExternalVelocity) * 2.0f * Time.deltaTime;
+        rb.velocity = globalSpeed * movement + smoothedExternalVelocity;
 
         rb.position = new Vector3
         (
