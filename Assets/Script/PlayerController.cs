@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     public float planeSpeedMin = 0.5f;
     public float planeSpeedMax = 2.0f;
     public Vector3 movementTilt = new Vector3(2.0f, 1.0f, 2.0f);
+    public Vector3 externalVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
     private Rigidbody rb;
     private float planeSpeed;
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour {
         planeSpeed = Mathf.Clamp(planeSpeed, planeSpeedMin, planeSpeedMax);
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical + gravitySpeed, -planeSpeed);
-        rb.velocity = globalSpeed * movement;
+        rb.velocity = globalSpeed * movement + externalVelocity;
 
         rb.position = new Vector3
         (
