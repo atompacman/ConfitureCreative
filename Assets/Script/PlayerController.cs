@@ -9,6 +9,7 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
+    private const int WALLS_LAYER = 8;
 
     public Boundary positionBoundary;
     public float globalSpeed = 10.0f;
@@ -21,23 +22,43 @@ public class PlayerController : MonoBehaviour
     public Vector3 externalVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     public Material dry;
     public Material wet;
+    public GameObject gameStateObject;
+    public Vector3 smoothedExternalVelocity = Vector3.zero;
 
     public float wetLvl = 0.0f;
 
     private Rigidbody rb;
     private float planeSpeed;
-    public Vector3 smoothedExternalVelocity = Vector3.zero;
+    private GameState gameState;
+    private Vector3 initPos;
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         planeSpeed = defaultPlaneSpeed;
+        gameState = gameStateObject.GetComponent<GameState>();
+        initPos = rb.position;
+    }
+
+    public void Reset()
+    {
+        gameObject.transform.position = initPos;
+        wetLvl = 0.0f;
+        
+        rb.position = initPos;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.rotation = Quaternion.identity;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // DON'T MOVE IF NOT IN "FLYING" GAME STATE
+        if (gameState.currentState != GameStateEnum.Flying)
+            return;
+
         float moveHorizontal = -Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
@@ -104,6 +125,10 @@ public class PlayerController : MonoBehaviour
             {
                 wetLvl = 1.0f;
             }
+        }
+        else if(collider.gameObject.layer == WALLS_LAYER)
+        {
+            gameState.GameOver();
         }
     }
 
