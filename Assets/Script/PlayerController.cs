@@ -107,10 +107,8 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(rb.position.y, positionBoundary.yMin, positionBoundary.yMax),
             rb.position.z
         );
-
-        float currHorizRotation = rb.velocity.y * movementTilt.x;
-        prevHorizontalRotation = currHorizRotation;
-        rb.rotation = Quaternion.Euler(Mathf.Lerp(currHorizRotation, prevHorizontalRotation, horizontalMoveSmoothing), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
+        Debug.Log(Mathf.Clamp(rb.velocity.y * movementTilt.x, -26, float.PositiveInfinity));
+        rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.velocity.y * movementTilt.x, -26, float.PositiveInfinity), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
     }
 
     void Update()
