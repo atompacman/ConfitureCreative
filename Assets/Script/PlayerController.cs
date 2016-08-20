@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour
     private float planeSpeed;
     private GameState gameState;
     private Vector3 initPos;
+    private float physicalDamage = 0;
 
     private float prevMoveHorizontal;
-    private float prevHorizontalRotation;
 
     // Use this for initialization
     void Start()
@@ -51,7 +51,10 @@ public class PlayerController : MonoBehaviour
     {
         gameObject.transform.position = initPos;
         wetLvl = 0.0f;
-        
+        physicalDamage = 0.0f;
+        transform.FindChild("Model").gameObject.SetActive(true);
+        transform.FindChild("GameOverPlane").gameObject.SetActive(false);
+
         rb.position = initPos;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
@@ -122,8 +125,24 @@ public class PlayerController : MonoBehaviour
             wetLvl -= Time.deltaTime / 30;
         }
 
-        var model = transform.FindChild("Model");
-        model.GetComponent<Renderer>().material.Lerp(dry, wet, wetLvl);
+        if (physicalDamage >= 1f)
+        {
+            transform.FindChild("Model").gameObject.SetActive(false);
+            transform.FindChild("GameOverPlane").gameObject.SetActive(true);
+            gameState.GameOver();
+        }
+
+        var mat = transform.FindChild("Model").GetComponent<Renderer>().material;
+        mat.SetFloat("_Wet", wetLvl);
+        mat.SetFloat("_DisplacementFactor", physicalDamage * 3);
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.name.Contains("PaperBall"))
+        {
+            physicalDamage = Mathf.Clamp01(physicalDamage + 0.1f);
+        }
     }
 
     void OnTriggerStay(Collider collider)
