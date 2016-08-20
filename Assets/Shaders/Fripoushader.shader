@@ -5,6 +5,7 @@
 		_MainTex ("Albedo", 2D) = "white" {}
 		_DisplacementMap ("Displacement map", 2D) = "white" {}
 		_DisplacementFactor ("Displacement factor", Range(0.0, 100.0)) = 0
+		_Wet ("Wet", Range (0.0, 1.0)) = 0.0
 	}
 	SubShader
 	{
@@ -39,6 +40,7 @@
 			sampler2D _DisplacementMap;
 			float _DisplacementFactor;
 			float4 _MainTex_ST;
+			float _Wet;
 			
 			v2f vert (appdata_base v)
 			{
@@ -55,7 +57,7 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
+				fixed4 col = lerp(tex2D(_MainTex, i.uv), float4(0.2,0.2,0.7,1), clamp(_Wet, 0, 1) * 0.8);
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				return col;
 			}
