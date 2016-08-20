@@ -21,6 +21,8 @@ public class Sprinkler : MonoBehaviour
     Dictionary<float, GameObject> balls;
     float lifeTime = 2.0f;
 
+    public float MinActiationDistance = 15;
+
     // Use this for initialization
     void Start()
     {
@@ -31,7 +33,12 @@ public class Sprinkler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pseudo.Next(500) < pseudo.Next(agressivity))
+        if (Vector3.Distance(GameObject.Find("PaperPlane").transform.position, transform.position) > MinActiationDistance)
+        {
+            return;
+        }
+
+        if (pseudo.Next(50) < pseudo.Next(agressivity))
         {
             Throw();
         }
