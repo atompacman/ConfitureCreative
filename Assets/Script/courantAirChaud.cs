@@ -31,15 +31,24 @@ public class courantAirChaud : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter ()
+    void OnTriggerEnter(Collider collider)
     {
+        if (collider.gameObject.name != "PaperPlane")
+        {
+            return;
+        }
+
         Vector3 originToPlane = playerController.transform.position - windOrigin.transform.position;
         actualVelocityVector = (40.0f + magnitude * 20.0f) / Vector3.Project(originToPlane, objectAxis).magnitude * objectAxis;
         playerController.externalVelocity += actualVelocityVector;
     }
 
-    void OnTriggerExit()
+    void OnTriggerExit(Collider collider)
     {
+        if (collider.gameObject.name != "PaperPlane")
+        {
+            return;
+        }
         playerController.externalVelocity -= actualVelocityVector;
     }
 }
