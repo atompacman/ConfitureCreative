@@ -20,11 +20,6 @@ public class Corridor : MonoBehaviour {
         CreateWall(false);
         CreateFloorOrCeiling(true, FLOOR_TILE);
         CreateFloorOrCeiling(false, CEILING_TILE);
-
-        for (int i = 0; i < LengthInTiles; ++i)
-        {
-
-        }
     }
 
     private void CreateFloorOrCeiling(bool IsFloor, GameObject prefab)
@@ -50,7 +45,8 @@ public class Corridor : MonoBehaviour {
             tile.transform.parent = transform;
             tile.transform.position = new Vector3(xOffset, TileSize / 2, -i * TileSize);
 
-            GameObject toInstantiate = Random.value < WindowProbability ? WINDOW_TILE : WALL_TILE;
+            bool isWindow = Random.value < WindowProbability;
+            GameObject toInstantiate = isWindow ? WINDOW_TILE : WALL_TILE;
             tile = Instantiate(toInstantiate);
             tile.transform.parent = transform;
             if (isLeftWall)
@@ -58,6 +54,14 @@ public class Corridor : MonoBehaviour {
                 tile.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
             }
             tile.transform.position = new Vector3(xOffset, 3 * TileSize / 2, -i * TileSize);
+            if (isWindow)
+            {
+                var thrower = Instantiate(BALL_THROWER);
+                thrower.GetComponent<BallThrower>().Player = GameObject.Find("PaperPlane");
+                thrower.transform.parent = transform;
+                thrower.transform.position = new Vector3(xOffset, 3 * TileSize / 2, -i * TileSize);
+            }
+
 
             tile = Instantiate(WALL_TILE);
             tile.transform.parent = transform;
