@@ -11,8 +11,8 @@ public class TextShadowMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         gameObject.transform.localPosition = new Vector3(
-            Mathf.Cos(Time.timeSinceLevelLoad * 2.0f) * 3.0f,
-            Mathf.Sin(Time.timeSinceLevelLoad * 2.0f) * 3.0f,
+            Mathf.Cos(Time.timeSinceLevelLoad * 2.0f) * 4.0f,
+            Mathf.Sin(Time.timeSinceLevelLoad * 2.0f) * 4.0f,
             0.0f
             );
 	}

@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float planeSpeed;
     private GameState gameState;
+    private Vector3 initPos;
 
     // Use this for initialization
     void Start()
@@ -37,6 +38,18 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         planeSpeed = defaultPlaneSpeed;
         gameState = gameStateObject.GetComponent<GameState>();
+        initPos = rb.position;
+    }
+
+    public void Reset()
+    {
+        gameObject.transform.position = initPos;
+        wetLvl = 0.0f;
+        
+        rb.position = initPos;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.rotation = Quaternion.identity;
     }
 
     // Update is called once per frame
@@ -115,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         else if(collider.gameObject.layer == WALLS_LAYER)
         {
-            Debug.Log("bangidy bang");
+            gameState.GameOver();
         }
     }
 

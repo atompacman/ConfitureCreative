@@ -8,9 +8,11 @@ public enum GameStateEnum
 
 public class GameState : MonoBehaviour
 {
-
     public GameStateEnum currentState = GameStateEnum.Start;
-    public GameObject titleScreen;
+    public HudController hudController;
+    public PlayerController playerController;
+
+    private bool buttonPressed = false;
 
     // Use this for initialization
     void Start()
@@ -24,18 +26,50 @@ public class GameState : MonoBehaviour
 
     }
 
-    void StartGame()
+    public void Restart()
+    {
+        currentState = GameStateEnum.Start;
+        playerController.Reset();
+        hudController.Hide();
+        hudController.ShowTitle();
+        Debug.Log("Back to title!");
+    }
+
+    public void StartGame()
     {
         // Start flying!
         currentState = GameStateEnum.Flying;
+        hudController.Hide();
+        Debug.Log("Started!");
+    }
+
+    public void GameOver()
+    {
+        currentState = GameStateEnum.Gameover;
+        hudController.ShowGameOver();
+        Debug.Log("Game over!");
     }
 
     void OnGUI()
     {
-        if (currentState == GameStateEnum.Start && Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
-            currentState = GameStateEnum.Flying;
-            titleScreen.SetActive(false);
+            if(!buttonPressed)
+            {
+                if (currentState == GameStateEnum.Start)
+                {
+                    StartGame();
+                }
+                else if (currentState == GameStateEnum.Gameover)
+                {
+                    Restart();
+                }
+            }
+            buttonPressed = true;
+        }
+        else
+        {
+            buttonPressed = false;
         }
     }
 }
