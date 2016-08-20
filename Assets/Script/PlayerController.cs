@@ -143,6 +143,10 @@ public class PlayerController : MonoBehaviour
         {
             physicalDamage = Mathf.Clamp01(physicalDamage + 0.1f);
         }
+        else if (collider.gameObject.name.Contains("CeilingFan") && collider == collider.gameObject.GetComponent<BoxCollider>())
+        {
+            physicalDamage = 1.0f;
+        }
     }
 
     void OnTriggerStay(Collider collider)
