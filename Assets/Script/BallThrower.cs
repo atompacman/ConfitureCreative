@@ -58,7 +58,7 @@ public class BallThrower : MonoBehaviour {
         var ball = Instantiate(projectile);
         ball.transform.parent = this.transform;
 
-        var startPos = new Vector3( (pseudo.Next((int)width*100) / 100.0f - width / 2.0f) , groundOffset, Player.transform.position.z + playerOffset);
+        var startPos = new Vector3( (pseudo.Next((int)width*100) / 100.0f - width / 2.0f) , groundOffset, Player.transform.position.z - playerOffset);
         ball.transform.position = startPos;
 
         var delta = 100 - aiming;

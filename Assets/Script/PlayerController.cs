@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
         {
             if (wetLvl < 1.0f)
             {
-                wetLvl += 0.2f;
+                wetLvl += 0.1f;
             }
             else
             {
