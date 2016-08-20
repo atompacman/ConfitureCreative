@@ -24,11 +24,11 @@ public class PlayerController : MonoBehaviour
     public Vector3 externalVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     public Material dry;
     public Material wet;
-    public GameObject gameStateObject;
     public Vector3 smoothedExternalVelocity = Vector3.zero;
 
     public float wetLvl = 0.0f;
 
+    private GameObject gameStateObject;
     private Rigidbody rb;
     private float planeSpeed;
     private GameState gameState;
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         planeSpeed = defaultPlaneSpeed;
+        gameStateObject = GameObject.Find("GameStateObject");
         gameState = gameStateObject.GetComponent<GameState>();
         initPos = rb.position;
     }
