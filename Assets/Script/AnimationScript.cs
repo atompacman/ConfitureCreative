@@ -6,8 +6,8 @@ using System.IO;
 
 public class AnimationScript : MonoBehaviour {
 
-    const int lastFrame = 25;
-    const int loopFrame = 16;
+    const int lastFrame = 21;
+    const int loopFrame = 12;
     const float frameInterval = 0.3f;
 
     List<Texture> frameImages = new List<Texture>();
