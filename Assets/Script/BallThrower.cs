@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
+
 public class BallThrower : MonoBehaviour {
 
     [Range(0, 100)]
     public int agressivity = 30;
     [Range(0, 100)]
     public int aiming = 25;
-    [Range(100,200)]
-    public int scale = 100;
+    public float minScale = 1;
+    public float maxScale = 5;
 
     [Range(0, 100)]
     public float strenght = 35f;
@@ -58,20 +58,19 @@ public class BallThrower : MonoBehaviour {
         var ball = Instantiate(projectile);
         ball.transform.parent = this.transform;
 
-        var startPos = new Vector3( (pseudo.Next((int)width*100) / 100.0f - width / 2.0f) , groundOffset, Player.transform.position.z - playerOffset);
-        ball.transform.position = startPos;
+        ball.transform.position = transform.position;
 
         var delta = 100 - aiming;
         var delX = pseudo.Next(delta) * width/2.0f / 100.0f - width / 2.0f / 2.0f;
         var delY = pseudo.Next(delta) * width / 2.0f / 100.0f - width / 2.0f / 2.0f;
         var deviation = new Vector3(delX, delY, 0.0f);
 
-        var target = Player.transform.position - startPos + deviation + new Vector3(0, playerOffset, 0 );
+        var target = Player.transform.position - transform.position + deviation + new Vector3(0, playerOffset, 0 );
         target.Normalize();
 
         ball.GetComponent<Rigidbody>().AddForce(target * ( 7.0f + strenght / 10.0f ), ForceMode.VelocityChange );
 
-        var scaleMod = pseudo.Next(scale-100) / 100.0f + 1.0f;
+        var scaleMod = UnityEngine.Random.value * (maxScale - minScale) + minScale;
         ball.transform.localScale = new Vector3(scaleMod, scaleMod, scaleMod);
 
         balls.Add(Time.time, ball);

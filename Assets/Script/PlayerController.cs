@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (moveVertical > 0)
         {
             moveVertical = 0.0f;
-            //   planeSpeed -= inputVerticalSpeed;
+            //planeSpeed -= inputVerticalSpeed;
         }
 
         // DOWN
@@ -107,10 +107,7 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(rb.position.y, positionBoundary.yMin, positionBoundary.yMax),
             rb.position.z
         );
-
-        float currHorizRotation = rb.velocity.y * movementTilt.x;
-        prevHorizontalRotation = currHorizRotation;
-        rb.rotation = Quaternion.Euler(Mathf.Lerp(currHorizRotation, prevHorizontalRotation, horizontalMoveSmoothing), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
+        rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.velocity.y * movementTilt.x, -26, float.PositiveInfinity), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
     }
 
     void Update()
@@ -128,26 +125,15 @@ public class PlayerController : MonoBehaviour
         model.GetComponent<Renderer>().material.Lerp(dry, wet, wetLvl);
     }
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.name.Contains("WaterDrop"))
-        {
-            if (wetLvl < 1.0f)
-            {
-                wetLvl += 0.1f;
-            }
-            else
-            {
-                wetLvl = 1.0f;
-            }
-        }
-    }
-
     void OnTriggerStay(Collider collider)
     {
         if (collider.gameObject.name.Contains("courantAirChaud"))
         {
             wetLvl -= 0.01f;
+        }
+        if (collider.gameObject.name.Contains("waterFall"))
+        {
+            wetLvl += 0.015f;
         }
         if (collider.gameObject.name.Contains("Puddle"))
         {

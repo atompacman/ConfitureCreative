@@ -15,6 +15,8 @@ public class Sprinkler : MonoBehaviour
 
     public float yOffset = 0.5f;
 
+    public Material mat;
+
     public GameObject projectile;
 
     System.Random pseudo;
@@ -61,6 +63,8 @@ public class Sprinkler : MonoBehaviour
     void Throw()
     {
         var ball = Instantiate(projectile);
+        ball.GetComponent<BillboardRenderer>().billboard = new BillboardAsset();
+        ball.GetComponent<BillboardRenderer>().material = mat;
         ball.transform.parent = this.transform;
 
         var startPos = gameObject.transform.position + new Vector3(0,yOffset,0);
