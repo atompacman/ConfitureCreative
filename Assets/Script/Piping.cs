@@ -47,7 +47,7 @@ public class Piping : MonoBehaviour
     {
         var obj = Instantiate(prefab);
         var pos = transform.position;
-        pos.z = posZ - MainPipeLength / 2;
+        pos.z = -posZ;
         obj.transform.position = pos;
         obj.transform.parent = transform;
         return obj;
