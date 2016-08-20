@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public float defaultPlaneSpeed = 1.0f;
     public float planeSpeedMin = 0.5f;
     public float planeSpeedMax = 2.0f;
+    // 0 : raw, 1 : smooth
+    public float horizontalMoveSmoothing = 0.05f;
     public Vector3 movementTilt = new Vector3(2.0f, 1.0f, 2.0f);
     public Vector3 externalVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     public Material dry;
@@ -31,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private float planeSpeed;
     private GameState gameState;
     private Vector3 initPos;
+
+    private float prevMoveHorizontal;
+    private float prevHorizontalRotation;
 
     // Use this for initialization
     void Start()
@@ -60,6 +65,9 @@ public class PlayerController : MonoBehaviour
             return;
 
         float moveHorizontal = -Input.GetAxis("Horizontal");
+        moveHorizontal = Mathf.Lerp(moveHorizontal, prevMoveHorizontal, horizontalMoveSmoothing);
+        prevMoveHorizontal = moveHorizontal;
+
         float moveVertical = Input.GetAxis("Vertical");
 
         // UP
@@ -100,7 +108,9 @@ public class PlayerController : MonoBehaviour
             rb.position.z
         );
 
-        rb.rotation = Quaternion.Euler(rb.velocity.y * movementTilt.x, rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
+        float currHorizRotation = rb.velocity.y * movementTilt.x;
+        prevHorizontalRotation = currHorizRotation;
+        rb.rotation = Quaternion.Euler(Mathf.Lerp(currHorizRotation, prevHorizontalRotation, horizontalMoveSmoothing), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
     }
 
     void Update()
