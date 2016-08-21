@@ -11,7 +11,6 @@ public class GameState : MonoBehaviour
     public GameStateEnum currentState = GameStateEnum.Start;
     public HudController hudController;
     public PlayerController playerController;
-    public AnimationScript anim;
 
     private bool buttonPressed = false;
 
@@ -49,16 +48,10 @@ public class GameState : MonoBehaviour
         GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = false;
         currentState = GameStateEnum.Start;
         playerController.Reset();
-
         if (hudController)
         {
             hudController.Hide();
             hudController.ShowTitle();
-        }
-        if (anim)
-        {
-            anim.gameObject.SetActive(true);
-            anim.Reset(); // Reset la petite animation cute
         }
         Debug.Log("Back to title!");
     }
@@ -71,11 +64,6 @@ public class GameState : MonoBehaviour
         {
             hudController.Hide();
         }
-        if (anim)
-        {
-            anim.gameObject.SetActive(false);
-        }
-
         Debug.Log("Started!");
     }
 
