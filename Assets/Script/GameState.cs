@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public enum GameStateEnum
 {
@@ -10,7 +11,6 @@ public class GameState : MonoBehaviour
 {
     public GameStateEnum currentState = GameStateEnum.Start;
     public HudController hudController;
-    public PlayerController playerController;
 
     private bool buttonPressed = false;
 
@@ -47,7 +47,13 @@ public class GameState : MonoBehaviour
     {
         GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = false;
         currentState = GameStateEnum.Start;
-        playerController.Reset();
+
+        GameObject player = GameObject.Find("PaperPlane");
+
+        if (player)
+        {
+            player.GetComponent<PlayerController>().Reset();
+        }
         if (hudController)
         {
             hudController.Hide();
@@ -59,7 +65,10 @@ public class GameState : MonoBehaviour
     public void StartGame()
     {
         // Start flying!
+        SceneManager.LoadScene("Level1");
+        // loading
         currentState = GameStateEnum.Flying;
+
         if (hudController)
         {
             hudController.Hide();
