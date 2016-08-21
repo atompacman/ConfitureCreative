@@ -29,6 +29,11 @@ public class HudController : MonoBehaviour {
         gameOverScreen.SetActive(true);
     }
 
+    public void ShowBravo()
+    {
+        //bravoScreen.SetActive(true);
+    }
+
     public void Hide()
     {
         titleScreen.SetActive(false);
