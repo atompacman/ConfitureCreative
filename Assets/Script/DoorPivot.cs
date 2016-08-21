@@ -22,7 +22,7 @@ public class DoorPivot : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
-            animate = true;
+            //animate = true;
         }
         if( animate && !Opened)
         {
