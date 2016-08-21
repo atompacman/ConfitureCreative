@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         moveHorizontal = Mathf.Lerp(moveHorizontal, prevMoveHorizontal, horizontalMoveSmoothing);
         prevMoveHorizontal = moveHorizontal;
 
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveVertical = -Input.GetAxis("Vertical");
 
         // UP
         if (moveVertical > 0)
