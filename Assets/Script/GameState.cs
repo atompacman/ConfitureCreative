@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum GameStateEnum
 {
-    Start, Flying, Gameover
+    Start, Flying, Gameover, Win
 }
 
 public class GameState : MonoBehaviour
@@ -40,7 +40,7 @@ public class GameState : MonoBehaviour
 
     public void StartGame()
     {
-        // Start flying!
+        //Start flying!
         currentState = GameStateEnum.Flying;
         hudController.Hide();
         anim.gameObject.SetActive(false);
@@ -52,6 +52,13 @@ public class GameState : MonoBehaviour
         currentState = GameStateEnum.Gameover;
         hudController.ShowGameOver();
         Debug.Log("Game over!");
+    }
+
+    public void GameWin()
+    {
+        currentState = GameStateEnum.Win;
+        hudController.ShowGameWin();
+        Debug.Log("Game Win!");
     }
 
     void OnGUI()
@@ -67,6 +74,7 @@ public class GameState : MonoBehaviour
                 else if (currentState == GameStateEnum.Gameover)
                 {
                     Restart();
+
                 }
             }
             buttonPressed = true;
