@@ -11,7 +11,6 @@ public class GameState : MonoBehaviour
     public GameStateEnum currentState = GameStateEnum.Start;
     public HudController hudController;
     public PlayerController playerController;
-    public AnimationScript anim;
 
     private bool buttonPressed = false;
 
@@ -51,8 +50,6 @@ public class GameState : MonoBehaviour
         playerController.Reset();
         hudController.Hide();
         hudController.ShowTitle();
-        anim.gameObject.SetActive(true);
-        anim.Reset(); // Reset la petite animation cute
         Debug.Log("Back to title!");
     }
 
@@ -61,7 +58,6 @@ public class GameState : MonoBehaviour
         // Start flying!
         currentState = GameStateEnum.Flying;
         hudController.Hide();
-        anim.gameObject.SetActive(false);
         Debug.Log("Started!");
     }
 
