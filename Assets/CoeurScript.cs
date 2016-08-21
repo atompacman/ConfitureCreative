@@ -21,8 +21,8 @@ public class CoeurScript : MonoBehaviour {
         gameObject.transform.localScale = new Vector3(coeff, coeff, coeff);
 
         gameObject.transform.localPosition = new Vector3(
-            Mathf.Cos(Time.realtimeSinceStartup * 0.2f + turns * 2.0f * Mathf.PI) * radius * (1.0f + 0.2f * Mathf.Sin(Time.realtimeSinceStartup * 2.0f)),
-            Mathf.Sin(Time.realtimeSinceStartup * 0.2f + turns * 2.0f * Mathf.PI) * radius * (1.0f + 0.2f * Mathf.Sin(Time.realtimeSinceStartup * 2.0f)),
+            Mathf.Cos(Time.realtimeSinceStartup * 0.6f + turns * 2.0f * Mathf.PI) * radius * (1.0f + 0.2f * Mathf.Sin(Time.realtimeSinceStartup * 2.0f)),
+            Mathf.Sin(Time.realtimeSinceStartup * 0.6f + turns * 2.0f * Mathf.PI) * radius * (1.0f + 0.2f * Mathf.Sin(Time.realtimeSinceStartup * 2.0f)),
             0.0f
             );
 
