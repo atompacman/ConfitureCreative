@@ -124,6 +124,8 @@ public class PlayerController : MonoBehaviour
             rb.position.z
         );
         rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.velocity.y * movementTilt.x, -26, float.PositiveInfinity), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
+        rb.angularVelocity = Vector3.zero;
+
     }
 
     void Update()
