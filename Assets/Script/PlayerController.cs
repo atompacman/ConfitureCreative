@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     private float prevMoveHorizontal;
 
+    public AudioClip wetDeathSound;
+
     // Use this for initialization
     void Start()
     {
@@ -113,6 +115,10 @@ public class PlayerController : MonoBehaviour
         if (rb.position.y < 1.0f)
         {
             GameState.instance.GameOver();
+            if (GameState.instance.currentState != GameStateEnum.Gameover && wetLvl >= 1f)
+            {
+                GetComponent<AudioSource>().PlayOneShot(wetDeathSound);
+            }
         }
 
         rb.position = new Vector3
@@ -180,7 +186,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collider.gameObject.name.Contains("waterFall"))
         {
-            wetLvl += 0.015f;
+            wetLvl += 0.05f;
         }
         if (collider.gameObject.name.Contains("Puddle"))
         {
