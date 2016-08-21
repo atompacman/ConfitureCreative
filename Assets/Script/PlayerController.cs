@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<SpeedTrailsController>().StopTrails();
         }
 
-        if (rb.position.y < 0.5f)
+        if (rb.position.y < 1.0f)
         {
             gameState.GameOver();
         }
