@@ -3,21 +3,18 @@
 [RequireComponent(typeof(AudioSource))]
 public class NonUniformSoundSource : MonoBehaviour {
 
-    public GameObject Player;
-
     public float VolumeFactor = 1;
+
+    private GameObject player;
 
     void Start()
     {
-        if (Player == null)
-        {
-            Player = GameObject.Find("PaperPlane");
-        }
+        player = GameObject.Find("PaperPlane");
     }
 
 	void Update()
     {
-        var delta = Player.transform.position.z - transform.position.z;
+        var delta = player.transform.position.z - transform.position.z;
 
         // Volume curve is different if the player sees the object or not
         float distFactor = delta > 0 ? 0.001f : 0.1f;

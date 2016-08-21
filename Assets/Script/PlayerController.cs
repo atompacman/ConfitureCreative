@@ -143,6 +143,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.FindChild("Model").gameObject.SetActive(false);
             transform.FindChild("GameOverPlane").gameObject.SetActive(true);
+            if (gameState.currentState != GameStateEnum.Gameover)
+            {
+                GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+            }
+            
             gameState.GameOver();
         }
 
