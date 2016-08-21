@@ -1,22 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class DoorTrigger : MonoBehaviour {
 
     public DoorPivot DoorPivot;
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
     void OnTriggerEnter()
     {
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         DoorPivot.Open();
     }
 }
