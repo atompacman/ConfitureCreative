@@ -41,7 +41,7 @@ public class courantAirChaud : MonoBehaviour {
         }
 
         Vector3 originToPlane = playerController.transform.position - windOrigin.transform.position;
-        actualVelocityVector = Mathf.Sign(magnitude) * (40.0f + magnitude * 20.0f) / Vector3.Project(originToPlane, objectAxis).magnitude * objectAxis;
+        actualVelocityVector = Mathf.Sign(magnitude) * (40.0f + magnitude * 20.0f) / (Vector3.Project(originToPlane, objectAxis).magnitude + 1.0f) * objectAxis;
         playerController.externalVelocity += actualVelocityVector;
     }
 
