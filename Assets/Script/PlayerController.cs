@@ -114,11 +114,11 @@ public class PlayerController : MonoBehaviour
 
         if (rb.position.y < 1.0f)
         {
-            GameState.instance.GameOver();
             if (GameState.instance.currentState != GameStateEnum.Gameover && wetLvl >= 1f)
             {
                 GetComponent<AudioSource>().PlayOneShot(wetDeathSound);
             }
+            GameState.instance.GameOver();
         }
 
         rb.position = new Vector3
