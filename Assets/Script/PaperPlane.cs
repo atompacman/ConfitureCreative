@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PaperPlane : MonoBehaviour
@@ -14,9 +13,6 @@ public class PaperPlane : MonoBehaviour
         CreateTesselatedTriangle(20, gameObj.AddComponent<MeshFilter>().mesh);
         gameObj.transform.localScale = new Vector3(0.5f, 1.0f, 1.5f);
         gameObj.transform.Rotate(new Vector3(0, 1f, 0));
-
-        AssetDatabase.CreateAsset(gameObj.GetComponent<MeshFilter>().mesh, "Assets/YOLO.asset");
-        AssetDatabase.SaveAssets();
 
         // Create other wing
         gameObj = Instantiate(original);
