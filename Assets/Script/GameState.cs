@@ -75,6 +75,7 @@ public class GameState : MonoBehaviour
 
     public void GameWin()
     {
+        GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = true;
         currentState = GameStateEnum.Win;
         hudController.ShowGameWin();
         Debug.Log("Bravo!");
