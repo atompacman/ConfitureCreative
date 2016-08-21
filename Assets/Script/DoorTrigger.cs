@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TriggerDoorScript : MonoBehaviour {
+public class DoorTrigger : MonoBehaviour {
 
-    public DoorPivotScript DoorPivot;
+    public DoorPivot DoorPivot;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
