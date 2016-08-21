@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System;
 
-public class BallThrower : MonoBehaviour {
-
+public class BallThrower : MonoBehaviour
+{
     [Range(0, 100)]
     public int agressivity = 30;
     [Range(0, 100)]
@@ -20,20 +20,27 @@ public class BallThrower : MonoBehaviour {
 
     public GameObject projectile;
     public GameObject Player;
+    public float MinimumActiationDistance = 15;
 
     System.Random pseudo;
     Dictionary<float, GameObject> balls;
     float lifeTime = 2.0f;
 
-    // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         pseudo = new System.Random(Time.time.GetHashCode());
         balls = new Dictionary<float, GameObject>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	    if(pseudo.Next(500) < pseudo.Next(agressivity) )
+	void Update()
+    {
+        var playerPos = GameObject.Find("PaperPlane").transform.position;
+        if (Vector3.Distance(playerPos, transform.position) > MinimumActiationDistance)
+        {
+            return;
+        }
+
+        if (pseudo.Next(500) < pseudo.Next(agressivity) )
         {
             Throw();
         }
