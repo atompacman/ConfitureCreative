@@ -11,6 +11,7 @@ public class GameState : MonoBehaviour
 {
     public GameStateEnum currentState = GameStateEnum.Start;
     public HudController hudController;
+    public string currentLevel = "Level1";
 
     private bool buttonPressed = false;
 
@@ -65,7 +66,7 @@ public class GameState : MonoBehaviour
     public void StartGame()
     {
         // Start flying!
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(currentLevel);
         // loading
         currentState = GameStateEnum.Flying;
 
@@ -109,9 +110,19 @@ public class GameState : MonoBehaviour
                 {
                     StartGame();
                 }
-                else if (currentState == GameStateEnum.Gameover || currentState == GameStateEnum.Win)
+                else if (currentState == GameStateEnum.Gameover)
                 {
                     Restart();
+                }
+                else if (currentState == GameStateEnum.Win)
+                {
+                    currentState = GameStateEnum.Flying;
+                    currentLevel = "Level2";
+                    SceneManager.LoadScene("Level2");
+                    if (hudController)
+                    {
+                        hudController.Hide();
+                    }
                 }
             }
             buttonPressed = true;
