@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
         smoothedExternalVelocity += (externalVelocity - smoothedExternalVelocity) * 2.0f * Time.deltaTime;
         rb.velocity = globalSpeed * movement + smoothedExternalVelocity;
 
-        if (rb.position.y < 0.5f)
+        if (rb.position.y < 1.0f)
         {
             gameState.GameOver();
         }
