@@ -56,6 +56,12 @@ public sealed class BallShooter : MonoBehaviour
     private void Update()
     {
         // Calculate predicted target position
+        if (Target == null)
+        {
+            Target = GameObject.Find("PaperPlane");
+        }
+
+
         var predictedTargetPos = Target.transform.position;
         predictedTargetPos += Target.GetComponent<Rigidbody>().velocity * PredictionTimeFactor;
         
