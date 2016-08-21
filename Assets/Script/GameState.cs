@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum GameStateEnum
 {
-    Start, Flying, Gameover, Win
+    Start, Flying, Gameover, Bravo
 }
 
 public class GameState : MonoBehaviour
@@ -15,10 +15,27 @@ public class GameState : MonoBehaviour
 
     private bool buttonPressed = false;
 
-    // Use this for initialization
-    void Start()
-    {
+    public static GameState instance;
 
+    GameState getInstance()
+    {
+        return instance;
+    }
+
+    // Use this for initialization
+    void Awake()
+    {
+        // First we check if there are any other instances conflicting
+        if (instance != null && instance != this)
+        {
+            // If that is the case, we destroy other instances
+            Destroy(gameObject);
+        }
+        // Here we save our singleton instance
+        instance = this;
+
+        // Furthermore we make sure that we don't destroy between scenes (this is optional)
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -29,6 +46,7 @@ public class GameState : MonoBehaviour
 
     public void Restart()
     {
+        GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = false;
         currentState = GameStateEnum.Start;
         playerController.Reset();
         hudController.Hide();
@@ -40,7 +58,7 @@ public class GameState : MonoBehaviour
 
     public void StartGame()
     {
-        //Start flying!
+        // Start flying!
         currentState = GameStateEnum.Flying;
         hudController.Hide();
         anim.gameObject.SetActive(false);
@@ -49,17 +67,19 @@ public class GameState : MonoBehaviour
 
     public void GameOver()
     {
+        GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = true;
         currentState = GameStateEnum.Gameover;
         hudController.ShowGameOver();
         Debug.Log("Game over!");
     }
 
-    public void GameWin()
+    public void Bravo()
     {
-        currentState = GameStateEnum.Win;
-        hudController.ShowGameWin();
-        Debug.Log("Game Win!");
+        currentState = GameStateEnum.Bravo;
+        hudController.ShowBravo();
+        Debug.Log("Bravo!");
     }
+
 
     void OnGUI()
     {
@@ -74,7 +94,6 @@ public class GameState : MonoBehaviour
                 else if (currentState == GameStateEnum.Gameover)
                 {
                     Restart();
-
                 }
             }
             buttonPressed = true;
