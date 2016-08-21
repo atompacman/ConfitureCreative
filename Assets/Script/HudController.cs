@@ -5,6 +5,7 @@ public class HudController : MonoBehaviour {
 
     public GameObject titleScreen;
     public GameObject gameOverScreen;
+    public GameObject gameWinScreen;
 
     // Use this for initialization
     void Start()
@@ -28,6 +29,10 @@ public class HudController : MonoBehaviour {
     {
         gameOverScreen.SetActive(true);
     }
+    public void ShowGameWin()
+    {
+        gameWinScreen.SetActive(true);
+    }
 
     public void ShowBravo()
     {
@@ -38,6 +43,7 @@ public class HudController : MonoBehaviour {
     {
         titleScreen.SetActive(false);
         gameOverScreen.SetActive(false);
+        gameWinScreen.SetActive(false);
     }
 
 }
