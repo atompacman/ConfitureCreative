@@ -17,7 +17,7 @@ public class CoeurScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        var coeff = baseScale + Mathf.Cos(Time.realtimeSinceStartup * beatFreq * 2.4f * Mathf.PI) * sinMagnitude;
+        var coeff = baseScale + Mathf.Cos(Time.realtimeSinceStartup * beatFreq * 2.4666666f * Mathf.PI) * sinMagnitude;
         gameObject.transform.localScale = new Vector3(coeff, coeff, coeff);
 
         gameObject.transform.localPosition = new Vector3(
