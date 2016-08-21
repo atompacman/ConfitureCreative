@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum GameStateEnum
 {
-    Start, Flying, Gameover, Bravo
+    Start, Flying, Gameover, Win
 }
 
 public class GameState : MonoBehaviour
@@ -73,10 +73,10 @@ public class GameState : MonoBehaviour
         Debug.Log("Game over!");
     }
 
-    public void Bravo()
+    public void GameWin()
     {
-        currentState = GameStateEnum.Bravo;
-        hudController.ShowBravo();
+        currentState = GameStateEnum.Win;
+        hudController.ShowGameWin();
         Debug.Log("Bravo!");
     }
 
@@ -91,7 +91,7 @@ public class GameState : MonoBehaviour
                 {
                     StartGame();
                 }
-                else if (currentState == GameStateEnum.Gameover)
+                else if (currentState == GameStateEnum.Gameover || currentState == GameStateEnum.Win)
                 {
                     Restart();
                 }

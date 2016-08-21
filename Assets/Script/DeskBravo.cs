@@ -17,7 +17,7 @@ public class DeskBravo : MonoBehaviour {
     {
         if (collider.gameObject == GameObject.Find("PaperPlane"))
         {
-            GameState.instance.Bravo();
+            GameState.instance.GameWin();
         }
     }
 }
