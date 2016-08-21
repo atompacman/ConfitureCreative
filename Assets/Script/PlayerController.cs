@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public Material wet;
     public Vector3 smoothedExternalVelocity = Vector3.zero;
 
+    public float minSpeedForTrails;
+
     public float wetLvl = 0.0f;
 
     private GameObject gameStateObject;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     public void Reset()
     {
+        GetComponent<SpeedTrailsController>().StopTrails();
         gameObject.transform.position = initPos;
         wetLvl = 0.0f;
         physicalDamage = 0.0f;
@@ -96,9 +99,18 @@ public class PlayerController : MonoBehaviour
         planeSpeed = Mathf.Clamp(planeSpeed, planeSpeedMin, planeSpeedMax);
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical + gravitySpeed - wetLvl, -planeSpeed);
-
+        
         smoothedExternalVelocity += (externalVelocity - smoothedExternalVelocity) * 2.0f * Time.deltaTime;
         rb.velocity = globalSpeed * movement + smoothedExternalVelocity;
+
+        if (rb.velocity.magnitude > minSpeedForTrails)
+        {
+            GetComponent<SpeedTrailsController>().StartTrails();
+        }
+        else
+        {
+            GetComponent<SpeedTrailsController>().StopTrails();
+        }
 
         if (rb.position.y < 0.5f)
         {
