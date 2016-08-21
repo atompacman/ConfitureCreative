@@ -124,6 +124,8 @@ public class PlayerController : MonoBehaviour
             rb.position.z
         );
         rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.velocity.y * movementTilt.x, -26, float.PositiveInfinity), rb.velocity.x * -movementTilt.y, rb.velocity.x * -movementTilt.z);
+        rb.angularVelocity = Vector3.zero;
+
     }
 
     void Update()
@@ -159,6 +161,12 @@ public class PlayerController : MonoBehaviour
         {
             physicalDamage = 1.0f;
         }
+
+        else if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
+        {
+            physicalDamage = Mathf.Clamp01(physicalDamage + 0.2f);
+        }
+
     }
 
     void OnTriggerStay(Collider collider)
@@ -174,6 +182,11 @@ public class PlayerController : MonoBehaviour
         if (collider.gameObject.name.Contains("Puddle"))
         {
             wetLvl += 0.04f;
+        }
+
+        else if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
+        {
+            physicalDamage = Mathf.Clamp01(physicalDamage + 0.1f);
         }
     }
 }
