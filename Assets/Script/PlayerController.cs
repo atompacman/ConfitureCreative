@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private GameObject gameStateObject;
     private Rigidbody rb;
     private float planeSpeed;
-    private GameState gameState;
     private Vector3 initPos;
     private float physicalDamage = 0;
 
@@ -45,7 +44,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         planeSpeed = defaultPlaneSpeed;
         gameStateObject = GameObject.Find("GameStateObject");
-        gameState = gameStateObject.GetComponent<GameState>();
         initPos = rb.position;
     }
 
@@ -68,7 +66,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // DON'T MOVE IF NOT IN "FLYING" GAME STATE
-        if (gameState.currentState != GameStateEnum.Flying)
+        if (GameState.instance.currentState != GameStateEnum.Flying)
             return;
 
         float moveHorizontal = -Input.GetAxis("Horizontal");
@@ -114,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         if (rb.position.y < 1.0f)
         {
-            gameState.GameOver();
+            GameState.instance.GameOver();
         }
 
         rb.position = new Vector3
@@ -143,12 +141,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.FindChild("Model").gameObject.SetActive(false);
             transform.FindChild("GameOverPlane").gameObject.SetActive(true);
-            if (gameState.currentState != GameStateEnum.Gameover)
+            if (GameState.instance.currentState != GameStateEnum.Gameover)
             {
                 GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
             }
             
-            gameState.GameOver();
+            GameState.instance.GameOver();
         }
 
         var mat = transform.FindChild("Model").GetComponent<Renderer>().material;
