@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 
@@ -24,7 +24,8 @@ public class AnimationScript : MonoBehaviour {
             if (Path.GetExtension(file) == ".meta")
                 continue;
 
-            var obj = AssetDatabase.LoadAssetAtPath<Texture>(file);
+            Texture obj = null;
+            //obj = AssetDatabase.LoadAssetAtPath<Texture>(file);
             if (obj != null)
             {
                 frameImages.Add(obj as Texture);

@@ -49,10 +49,17 @@ public class GameState : MonoBehaviour
         GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = false;
         currentState = GameStateEnum.Start;
         playerController.Reset();
-        hudController.Hide();
-        hudController.ShowTitle();
-        anim.gameObject.SetActive(true);
-        anim.Reset(); // Reset la petite animation cute
+
+        if (hudController)
+        {
+            hudController.Hide();
+            hudController.ShowTitle();
+        }
+        if (anim)
+        {
+            anim.gameObject.SetActive(true);
+            anim.Reset(); // Reset la petite animation cute
+        }
         Debug.Log("Back to title!");
     }
 
@@ -60,8 +67,15 @@ public class GameState : MonoBehaviour
     {
         // Start flying!
         currentState = GameStateEnum.Flying;
-        hudController.Hide();
-        anim.gameObject.SetActive(false);
+        if (hudController)
+        {
+            hudController.Hide();
+        }
+        if (anim)
+        {
+            anim.gameObject.SetActive(false);
+        }
+
         Debug.Log("Started!");
     }
 
@@ -69,7 +83,10 @@ public class GameState : MonoBehaviour
     {
         GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = true;
         currentState = GameStateEnum.Gameover;
-        hudController.ShowGameOver();
+        if (hudController)
+        {
+            hudController.ShowGameOver();
+        }
         Debug.Log("Game over!");
     }
 
@@ -77,7 +94,10 @@ public class GameState : MonoBehaviour
     {
         GameObject.Find("PaperPlane").GetComponent<Rigidbody>().useGravity = true;
         currentState = GameStateEnum.Win;
-        hudController.ShowGameWin();
+        if (hudController)
+        {
+            hudController.ShowGameWin();
+        }
         Debug.Log("Bravo!");
     }
 
