@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<SpeedTrailsController>().StopTrails();
         }
 
-        if (rb.position.y < 1.0f)
+        if (rb.position.y <= positionBoundary.yMin)
         {
             if (GameState.instance.currentState != GameStateEnum.Gameover && wetLvl >= 1f)
             {
