@@ -3,21 +3,25 @@ using System.Collections;
 
 public class DeskBravo : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public float winDelay = 2.0f;
 
-    void OnTriggerEnter(Collider collider)
+    private float collisionTime = 0.0f;
+
+    void Start()
+    {
+        collisionTime = 0.0f;
+    }
+
+    void OnTriggerStay(Collider collider)
     {
         if (collider.gameObject == GameObject.Find("PaperPlane"))
         {
-            GameState.instance.GameWin();
+            collisionTime += Time.deltaTime;
+
+            if (collisionTime >= winDelay)
+            {
+                GameState.instance.GameWin();
+            }
         }
     }
 }
