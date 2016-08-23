@@ -6,9 +6,12 @@ public class DoorTrigger : MonoBehaviour {
 
     public DoorPivot DoorPivot;
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider collider)
     {
-        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
-        DoorPivot.Open();
+        if (collider.gameObject == GameObject.Find("PaperPlane"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+            DoorPivot.Open();
+        }
     }
 }
