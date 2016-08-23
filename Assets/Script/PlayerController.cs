@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 {
     private const int WALLS_LAYER = 8;
 
+    public float inputSensitivity = 0.8f;
+
     public Boundary positionBoundary;
     public float globalSpeed = 10.0f;
     public float gravitySpeed = -0.3f;
@@ -71,11 +73,11 @@ public class PlayerController : MonoBehaviour
         if (GameState.instance.currentState != GameStateEnum.Flying)
             return;
 
-        float moveHorizontal = -Input.GetAxis("Horizontal");
+        float moveHorizontal = - inputSensitivity * Input.GetAxis("Horizontal");
         moveHorizontal = Mathf.Lerp(moveHorizontal, prevMoveHorizontal, horizontalMoveSmoothing);
         prevMoveHorizontal = moveHorizontal;
 
-        float moveVertical = -Input.GetAxis("Vertical");
+        float moveVertical = - inputSensitivity * Input.GetAxis("Vertical");
 
         // UP
         if (moveVertical > 0)
